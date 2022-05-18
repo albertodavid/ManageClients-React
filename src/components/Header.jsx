@@ -1,10 +1,13 @@
 import React from 'react'
 
-function Header() {
+const Header = () => {
   return (
-    <div>
-        <h1>Header</h1>
-    </div>
+    <>
+        <h1 className="font-black text-5xl text-center md:w-4/5 mx-auto">
+          Seguimiento de 
+          <span className="text-red-500"> clientes</span>
+        </h1>
+    </>
   )
 }
 
