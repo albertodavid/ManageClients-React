@@ -1,4 +1,5 @@
 import React from 'react'
+import Error from './Error';
 
 import { useState, useEffect } from 'react'
 
@@ -12,6 +13,9 @@ const Form = ({clientes, setClientes}) => {
 
   const [error, setError] = useState(false)
 
+  const generateID = () => {
+    return Math.random().toString(36).substring(2)+Date.now().toString(36)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -28,10 +32,21 @@ const Form = ({clientes, setClientes}) => {
         direccion,
         email,
         alta,
-        info
+        info,
+        id:generateID()
       }
 
       setClientes([...clientes, objetoCliente])
+
+      //reiniciar el formulario
+
+
+      setNombre("")
+      setAlta("")
+      setDireccion("")
+      setEmail("")
+      setInfo("")
+      setError(false)
     }
   }
 
@@ -112,9 +127,7 @@ const Form = ({clientes, setClientes}) => {
         </div>
 
 
-        {error && (<div className=' bg-red-900 text-white p-2 my-5 text-center uppercase font-bold'>
-                      <p>Todos los campos son obligatorios</p>
-                  </div>)}
+        {error && <Error mensaje="todos los campos son obligatorios"/>}
 
         <input type="submit" value="AGREGAR CLIENTE"
         className="bg-red-500 w-full p-3 mt-2 rounded-md text-white font-bold hover:bg-red-600 transition-all cursor-pointer" />
