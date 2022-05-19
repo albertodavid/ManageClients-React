@@ -7,6 +7,7 @@ const Header = () => {
           Seguimiento de 
           <span className="text-red-500"> clientes</span>
         </h1>
+        
     </>
   )
 }

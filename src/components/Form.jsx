@@ -3,7 +3,7 @@ import Error from './Error';
 
 import { useState, useEffect } from 'react'
 
-const Form = ({clientes, setClientes}) => {
+const Form = ({cliente, clientes, setCliente, setClientes}) => {
 
   const [nombre, setNombre] = useState("");
   const [direccion, setDireccion] = useState("");
@@ -12,6 +12,14 @@ const Form = ({clientes, setClientes}) => {
   const [info, setInfo] = useState("");
 
   const [error, setError] = useState(false)
+
+  useEffect(() => {
+    setNombre(cliente.nombre)
+    setDireccion(cliente.direccion)
+    setEmail(cliente.email)
+    setAlta(cliente.alta)
+    setInfo(cliente.info)
+  }, [cliente]);
 
   const generateID = () => {
     return Math.random().toString(36).substring(2)+Date.now().toString(36)
@@ -33,26 +41,39 @@ const Form = ({clientes, setClientes}) => {
         email,
         alta,
         info,
-        id:generateID()
+        
       }
 
-      setClientes([...clientes, objetoCliente])
+      if(cliente.id){
+        objetoCliente.id = cliente.id
+
+        const clienteActualizados = clientes.map( clienteState =>
+           clienteState.id === cliente.id ? objetoCliente : clienteState 
+        )
+
+        setClientes(clienteActualizados)        
+        
+      }else{
+        //Setea la lista de clientes
+        objetoCliente.id = generateID()
+        setClientes([...clientes, objetoCliente])
+      }
 
       //reiniciar el formulario
-
-
       setNombre("")
       setAlta("")
       setDireccion("")
       setEmail("")
       setInfo("")
       setError(false)
+      setCliente({})
+      
     }
   }
 
   return (
     <div className='md:w-1/2 lg:w-2/5'> 
-        <h2 className='font-black text-3xl text-center'>Form</h2>
+        <h2 className='font-black text-3xl text-center'>Añadir/Editar</h2>
         <p className='text-center font-bold text-md mt-5'>Añade usurios y 
           <span className="text-red-500"> administralos</span>
         </p>
@@ -129,7 +150,9 @@ const Form = ({clientes, setClientes}) => {
 
         {error && <Error mensaje="todos los campos son obligatorios"/>}
 
-        <input type="submit" value="AGREGAR CLIENTE"
+        <input 
+        type="submit" 
+        value={cliente.id ? 'Editar cliente' : 'Añadir cliente' }
         className="bg-red-500 w-full p-3 mt-2 rounded-md text-white font-bold hover:bg-red-600 transition-all cursor-pointer" />
 
       </form>

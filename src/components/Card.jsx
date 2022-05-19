@@ -1,10 +1,17 @@
-const Card = ({cliente}) => {
+const Card = ({cliente, setCliente, eliminarCliente}) => {
+  const handleEliminar = () => {
+    const respuesta = confirm("¿Desea eliminar este Cliente?")
+    
+    if (respuesta) {
+      eliminarCliente(cliente.id)
+    }
+
+  }
+
   return (
 
     <div className='bg-white shadow-md rounded-lg ml-5 py-10 px-10 my-10'>
     
-
-
     <p className='font-bold mb-3 text-gray-700 uppercase'>Nombre:
       <span className='font-normal normal-case'> {cliente.nombre}</span>
     </p>
@@ -28,12 +35,14 @@ const Card = ({cliente}) => {
     <div className="flex justify-end">
       <button 
       type="button"
-      className="py-1 px-5 bg-red-500 hover:bg-red-600 border-2 rounded-md text-white">
+      className="py-1 px-5 bg-red-500 hover:bg-red-600 border-2 rounded-md text-white"
+      onClick={()=>setCliente(cliente)}>
       Edit
       </button>
 
       <button 
       type="button"
+      onClick={handleEliminar}
       className="py-1 px-5 bg-gray-500 hover:bg-gray-600 border-2 rounded-md text-white">
       Delete
       </button>

@@ -1,9 +1,8 @@
 import React from 'react'
 import Card from './Card'
 
-const ListPatients = ({clientes}) => {
+const ListPatients = ({clientes, setCliente, eliminarCliente}) => {
 
-  console.log(clientes);
   return (
     <div className='md:w-1/2 lg:w-3/5'>
       {clientes && clientes.length ? (
@@ -22,11 +21,14 @@ const ListPatients = ({clientes}) => {
         </>
       )}
 
-
-
         {clientes.map((cliente) => {
-          return <Card key={cliente.id} cliente={cliente} />}
+          return <Card 
+          key={cliente.id} 
+          cliente={cliente}
+          setCliente={setCliente}
+          eliminarCliente={eliminarCliente} />}
         )}
+
     </div>
   )
 }
